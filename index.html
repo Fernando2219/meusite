@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Desertificação Interativo</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4e1a1;
+            color: #3b2f1b;
+            overflow-x: hidden;
+        }
+
+        /* Radios para controle de telas */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Cabeçalho fixo */
+        header {
+            background: linear-gradient(135deg, #ffb871, #e6b96a);
+            color: #3b2f1b;
+            text-align: center;
+            padding: 15px 0 25px 0;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 5px 0;
+            font-size: 2rem;
+        }
+
+        /* Navbar com labels para radio */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        nav label {
+            cursor: pointer;
+            padding: 8px 14px;
+            background-color: #e6b96a;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        nav label:hover {
+            background-color: #c97b3e;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Container das telas */
+        .conteudo {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            margin: 150px auto 50px auto;
+            /* compensa cabeçalho */
+            min-height: 400px;
+        }
+
+        .tela {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 90%;
+            max-width: 1000px;
+            padding: 30px;
+            background-color: #fff8e7;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateX(150%);
+            transition: all 0.6s ease;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.6;
+        }
+
+        /* Tela ativa */
+        #tela-conceitos:checked~.conteudo #conceitos,
+        #tela-consequencias:checked~.conteudo #consequencias,
+        #tela-regioes:checked~.conteudo #regioes,
+        #tela-solucoes:checked~.conteudo #solucoes {
+            opacity: 1;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        h2 {
+            border-left: 6px solid #c97b3e;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 15px 0;
+        }
+
+        /* Adicionando ponto antes de cada tópico */
+        .topico::before {
+            content: "•";
+            color: #c97b3e;
+            /* cor do ponto */
+            font-weight: bold;
+            display: inline-block;
+            width: 25px;
+            /* espaço antes do texto */
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #0d6efd;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Imagens */
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 10px;
+        }
+
+        /* Galeria */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .galeria figure {
+            background-color: #faecd1;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .galeria figure:hover {
+            transform: scale(1.03);
+        }
+
+        .galeria img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .galeria figcaption {
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            color: #4a3318;
+        }
+
+        body {
+            background-color: #f4e1a1;
+            color: #3b2f1b;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+            /* espaço para footer fixo */
+        }
+
+        /* Footer fixo */
+        footer {
+            background: #cfa36b;
+            text-align: center;
+            color: #3b2f1b;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .voltar {
+            position: fixed;
+            left: 60px;
+        }
+
+        .poppins-thin {
+            font-family: "Poppins", sans-serif;
+            font-weight: 800;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Radios para controle -->
+    <input type="radio" name="tela" id="tela-conceitos">
+    <input type="radio" name="tela" id="tela-consequencias">
+    <input type="radio" name="tela" id="tela-regioes">
+    <input type="radio" name="tela" id="tela-solucoes">
+
+    <!-- Navbar -->
+    <header>
+        <h1 class="poppins-thin">Desertificação</h1>
+        <nav>
+            <label for="tela-conceitos" class="poppins-thin">Conceitos e Causas</label>
+            <label for="tela-consequencias" class="poppins-thin">Consequências</label>
+            <label for="tela-regioes" class="poppins-thin">Regiões Afetadas (Brasil)</label>
+            <label for="tela-solucoes" class="poppins-thin">Soluções e Prevenção</label>
+        </nav>
+    </header>
+
+    <!-- Conteúdo -->
+    <div class="conteudo">
+        <!-- Conceitos -->
+        <div id="conceitos" class="tela">
+            <h2>Conceitos e Causas da Desertificação</h2>
+            <p class="topico">Processo em que a terra perde a capacidade de sustentar vida.</p>
+            <p class="topico">O solo, antes fértil e produtivo, torna-se seco, rachado e pobre em nutrientes.</p>
+            <p class="topico">Dificulta o crescimento das plantas e afeta o equilíbrio do ecossistema.</p>
+            <p class="topico">Não significa o surgimento de um deserto de areia, mas sim a redução da produtividade e
+                aumento da vulnerabilidade da região.</p>
+            <p class="topico">Resultado de fatores climáticos e ações humanas.</p>
+
+            <h2>Importância ambiental e social</h2>
+            <p class="topico">Indica desequilíbrio ambiental, mostrando que o solo está sendo explorado mais rápido do
+                que consegue se regenerar.</p>
+            <p class="topico">Lembra que os recursos naturais são limitados.</p>
+            <p class="topico">Afeta diretamente as pessoas que dependem da terra para produzir alimentos, criar animais
+                e manter comunidades rurais.</p>
+            <p class="topico">É um problema ecológico e social ao mesmo tempo.</p>
+
+            <h2>Causas da Desertificação</h2>
+            <h3>Causas Naturais</h3>
+            <p class="topico">Secas prolongadas – longos períodos sem chuva deixam o solo ressecado e frágil.</p>
+            <p class="topico">Altas temperaturas – aumentam a evaporação da água e dificultam a manutenção da vegetação.
+            </p>
+            <p class="topico">Chuvas irregulares – quando muito intensas, causam erosão e carregam o solo fértil.</p>
+
+            <h3>Causas Humanas</h3>
+            <p class="topico">Desmatamento – remove a cobertura vegetal, expondo o solo ao vento e à chuva.</p>
+            <p class="topico">Queimadas – destroem a vegetação e reduzem os nutrientes do solo.</p>
+            <p class="topico">Uso excessivo do solo – plantações contínuas e pastagens intensas esgotam os nutrientes.</p>
+            <p class="topico">Manejo inadequado – falta de rotação de culturas e descanso do solo acelera a degradação.
+            </p>
+        </div>
+
+        <!-- Consequências -->
+        <div id="consequencias" class="tela">
+            <h2>Consequências</h2>
+            <p class="topico">A desertificação provoca sérios impactos no meio ambiente e na vida humana. Com a
+                degradação do solo e a perda de vegetação, muitos animais e plantas perdem seu habitat, causando
+                desequilíbrios ecológicos e perda de biodiversidade. O solo torna-se infértil e incapaz de reter água, o
+                que prejudica a agricultura e reduz a produção de alimentos.</p>
+            <p class="topico">Essas mudanças também influenciam o clima, já que a ausência de vegetação aumenta a
+                concentração de gás carbônico na atmosfera, contribuindo para o aquecimento global. No aspecto social e
+                econômico, a queda da produtividade da terra gera pobreza, fome e migração de comunidades rurais em
+                busca de melhores condições de vida.</p>
+            <p class="topico">Além disso, a escassez de recursos naturais, como água e madeira, afeta o sustento das
+                populações locais. A saúde também é comprometida: o aumento da poeira nas regiões áridas causa doenças
+                respiratórias, e a falta de alimentos leva à desnutrição, especialmente entre crianças.</p>
+            <p class="topico">Um exemplo de desertificação é a região do Sahel, na África, onde o manejo inadequado do
+                solo, a exploração excessiva de recursos e as mudanças climáticas levaram à degradação da terra e ao
+                avanço do deserto do Saara sobre áreas férteis.</p>
+        </div>
+
+        <!-- Regiões -->
+        <div id="regioes" class="tela">
+            <h2>Algumas Regiões Brasileiras Afetadas</h2>
+            <p class="topico">Algumas áreas do Nordeste brasileiro estão mais vulneráveis à desertificação devido à
+                combinação de clima seco e exploração intensa do solo.</p>
+            <div class="galeria">
+                <figure>
+                    <img src="/img/regiao1.jpg" alt="Seridó">
+                    <figcaption>Seridó - RN</figcaption>
+                </figure>
+                <figure>
+                    <img src="/img/regiao2.jpg" alt="Cabrobó">
+                    <figcaption>Cabrobó - PE</figcaption>
+                </figure>
+                <figure>
+                    <img src="/img/iracuba.jpeg" alt="Iraçuba">
+                    <figcaption>Iraçuba - CE</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <!-- Soluções -->
+        <div id="solucoes" class="tela">
+            <h2>Soluções e Prevenção</h2>
+            <p class="topico">Implementar práticas de manejo sustentável, reflorestamento, rotação de culturas e
+                controle do pastoreio ajuda a prevenir a desertificação.</p>
+            <p class="topico">Incentivar o uso racional da água, técnicas de irrigação eficiente e educação ambiental
+                também são medidas essenciais.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Site sobre Desertificação — Desenvolvido por Eduardo, Enzo, Fernando, Lucas</p>
+    </footer>
+    <script>
+
+    //retorna a tela para cima
+
+    const tabs = document.querySelectorAll('nav label');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+    </script>
+</body>
+
+</html>

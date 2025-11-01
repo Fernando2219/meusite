@@ -128,3 +128,50 @@ footer {
     font-size: 0.9rem;
     box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
 }
+/* --- Responsividade para tablets e celulares --- */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    h1, h2 {
+        text-align: center;
+        font-size: 1.4em;
+    }
+
+    p {
+        text-align: justify;
+        line-height: 1.6;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+
+    footer {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.2em;
+    }
+
+    p {
+        font-size: 0.95em;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+

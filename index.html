@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desertificação</title>
-    <link rel="icon" type="image/x-icon" href="src/img/favicon.ico">
+    <link rel="stylesheet" href="src/img/favicon.ico">
     <style>
         /* Reset básico */
         * {
@@ -270,7 +269,8 @@
             <h3>Causas Humanas</h3>
             <p class="topico">Desmatamento – remove a cobertura vegetal, expondo o solo ao vento e à chuva.</p>
             <p class="topico">Queimadas – destroem a vegetação e reduzem os nutrientes do solo.</p>
-            <p class="topico">Uso excessivo do solo – plantações contínuas e pastagens intensas esgotam os nutrientes.</p>
+            <p class="topico">Uso excessivo do solo – plantações contínuas e pastagens intensas esgotam os nutrientes.
+            </p>
             <p class="topico">Manejo inadequado – falta de rotação de culturas e descanso do solo acelera a degradação.
             </p>
         </div>
@@ -301,15 +301,15 @@
                 combinação de clima seco e exploração intensa do solo.</p>
             <div class="galeria">
                 <figure>
-                    <img src="src/img/regiao1.jpg" alt="Seridó">
+                    <img src="/img/regiao1.jpg" alt="Seridó">
                     <figcaption>Seridó - RN</figcaption>
                 </figure>
                 <figure>
-                    <img src="src/img/regiao2.jpg" alt="Cabrobó">
+                    <img src="/img/regiao2.jpg" alt="Cabrobó">
                     <figcaption>Cabrobó - PE</figcaption>
                 </figure>
                 <figure>
-                    <img src="src/img/iracuba.jpeg" alt="Iraçuba">
+                    <img src="/img/iracuba.jpeg" alt="Iraçuba">
                     <figcaption>Iraçuba - CE</figcaption>
                 </figure>
             </div>
@@ -318,10 +318,24 @@
         <!-- Soluções -->
         <div id="solucoes" class="tela">
             <h2>Soluções e Prevenção</h2>
-            <p class="topico">Implementar práticas de manejo sustentável, reflorestamento, rotação de culturas e
-                controle do pastoreio ajuda a prevenir a desertificação.</p>
-            <p class="topico">Incentivar o uso racional da água, técnicas de irrigação eficiente e educação ambiental
-                também são medidas essenciais.</p>
+            Algumas alternativas que podem ajudar no combate e mitigação da desertificação são:
+
+            <p class="topico">A prevenção e/ou redução da degradação das terras;</p>
+            <p class="topico">A reabilitação e recuperação de terras parcialmente degradadas;</p>
+
+            <p class="topico">Recuperação de mata ciliar;</p>
+
+            <p class="topico">Reflorestamento;</p>
+
+            <p class="topico">Investimento em pesquisas e criação de banco de dados de informações referentes às áreas
+                com processos de desertificação;</p>
+
+            <p class="topico">Educação da população;</p>
+            <p class="topico">Implantação de cordões de pedra, terraceamento e barragens sucessivas;</p>
+
+            <p class="topico">Uso de sistema de integração lavoura-pecuária-floresta;</p>
+
+            <p class="topico">Manejo mais sustentável do solo</p>
         </div>
 
     </div>
@@ -331,21 +345,20 @@
     </footer>
     <script>
 
-    //retorna a tela para cima
+        //retorna a tela para cima
 
-    const tabs = document.querySelectorAll('nav label');
+        const tabs = document.querySelectorAll('nav label');
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
-    });
     </script>
 </body>
-
 
 </html>
 
